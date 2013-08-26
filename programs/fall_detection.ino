@@ -1,5 +1,8 @@
 #include <AcceleroMMA7361.h>
 
+/*Simple code to show through "Serial Monitor"
+of Arduino IDE real time "g"'s values of each axis.*/
+
 AcceleroMMA7361 accelero;
 float x, y, z;
 int xpin, ypin, zpin, gs, sl, g0, st;
