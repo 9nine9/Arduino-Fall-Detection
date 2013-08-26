@@ -1,4 +1,4 @@
-#include <AcceleroMMA7361.h>
+﻿#include <AcceleroMMA7361.h>
 
 
 AcceleroMMA7361 accelero;
@@ -6,10 +6,16 @@ float x, y, z;
 int xpin, ypin, zpin, gs, sl, g0, st;
 boolean caiguda;
 
-void interrupt_name()
+void interrupt_name() //interrupcio que s'activa si es detecten 0g als 3 eixos
 {
-  //enviar missatge de caiguda
+  //pensar que fer si detecta caiguda
 }
+
+void fall() //funcio per si es detecta caiguda sense fer servir interrupcions
+{
+  //pensar que fer si detecta caiguda
+}
+
 void setup()
 {
   //declarar els diferents pints de l'accelerometre i altres variables
@@ -37,9 +43,10 @@ void loop()
   x = float(accelero.getXAccel())/100;
   y = float(accelero.getYAccel())/100;
   z = float(accelero.getZAccel())/100;
-  if (x>2 && y>2 && z>2)
+  if (x>2 && y>2 && z>2) //vigila que no hi hagi una frenada brusca (en comptes de 0g, busca >2g)
   {
-    caiguda = true;
+    caiguda = true; //pensar que fer si detecta caiguda
+
   }
   
   /*
