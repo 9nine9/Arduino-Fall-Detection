@@ -1,5 +1,9 @@
-#include <AcceleroMMA7361.h>
+/*=======================================
+Program that detects a fall ensuring that
+it's not a "false positive" (jumps, etc).
+========================================*/
 
+#include <AcceleroMMA7361.h>
 
 AcceleroMMA7361 accelero;
 float x, y, z;
