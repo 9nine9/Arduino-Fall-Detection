@@ -9,19 +9,18 @@ int xpin, ypin, zpin, gs, sl, g0, st;
 
 void setup()
 {
-  //declarar els diferents pints de l'accelerometre
-  xpin = 0;   //pin per llegir l'eix x
-  ypin = 1;   //pin per llegir l'eix y
-  zpin = 2;   //pin per llegir l'eix z
-  gs = 42;    //g select
-  sl = 30;    //sleep pin: HIGH = ON, LOW = OFF
-  g0 = 40;    //0g: detecta quan els 3 eixos estan a 0g (caiguda lliure)
-  st = 29;    //self-test pin
+  xpin = 0;   
+  ypin = 1;   
+  zpin = 2; 
+  gs = 42;  
+  sl = 30;    
+  g0 = 40;    
+  st = 29;    
   
   Serial.begin(9600);
   accelero.begin(sl, st, g0, gs, xpin, ypin, zpin); 
-  accelero.setARefVoltage(3.3);                     //AREF pin de l'arduino (3.3 més precisió, sino 5)
-  accelero.setSensitivity(LOW);                     //LOW = +/-6g, HIGH = +/-1,5g
+  accelero.setARefVoltage(3.3);                     
+  accelero.setSensitivity(LOW);                    
   accelero.calibrate();
 }
 
