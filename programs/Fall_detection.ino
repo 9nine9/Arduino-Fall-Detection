@@ -24,35 +24,37 @@ boolean falling;
 
 void setup()
 {
-  //Declare accelerometer pinout
-  xpin = A0;   //x axis pin
-  ypin = A1;   //y axis pin
-  zpin = A2;   //z axis pin
-  gs = 5;    //g select
-  sl = 4;    //sleep pin: HIGH = ON, LOW = OFF
-  g0 = 3;    //0g: detects free fall (HIGH when all axis = 0)
-  st = 6;    //self-test pin
+  /*Declare accelerometer pinout*/
+  xpin = A0;   						//x axis pin
+  ypin = A1;   						//y axis pin
+  zpin = A2;   						//z axis pin
+  gs = 5;    						//g select
+  sl = 4;    						//sleep pin: HIGH = ON, LOW = OFF
+  g0 = 3;    						//0g: detects free fall (HIGH when all axis = 0)
+  st = 6;    						//self-test pin
   falling = false;
-  
-  Serial.begin(9600);
+
+  Serial.begin(9600);  
+
+  /*Configurate accelerometer*/
   accelero.begin(sl, st, g0, gs, xpin, ypin, zpin); 
-  accelero.setARefVoltage(3.3);                     //arduino AREF pin (3.3 more accuracy, 5 otherwise)
-  accelero.setSensitivity(LOW);                     //LOW = +/-6g, HIGH = +/-1,5g
+  accelero.setARefVoltage(3.3);                     	//arduino AREF pin (3.3 more accuracy, 5 otherwise)
+  accelero.setSensitivity(LOW);                     	//LOW = +/-6g, HIGH = +/-1,5g
   accelero.calibrate();
 }
 
 void loop()
 {
   get_accelerations();
-  if (x<0.1 && y<0.1 && z<0.1)
+  if (x<0.1 && y<0.1 && z<0.1)                   	//if all three axis are less than 0.1g, it's falling!
   {
     start_time = millis();
     falling = true;
-    while ((z<5 && y<5 && z<5) && falling)
+    while ((z<5 && y<5 && z<5) && falling)       	//wait for the "peak" in "g's" when it hits the ground
     {
       get_accelerations();
       falling_time = millis();
-      if ((falling_time - start_time)>5000)
+      if ((falling_time - start_time)>5000)     	//if it has been falling for more than 5 seconds, its a "false positive"
       {
         falling = false;
       }
