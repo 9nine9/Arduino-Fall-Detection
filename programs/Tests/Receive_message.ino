@@ -1,0 +1,42 @@
+/*========================================
+Program that receives via MX-05V (RF) a 
+message send by MX-FS-03V.
+========================================*/
+
+/*========================================
+This library has all the functions used in
+the RF communication.
+========================================*/
+
+#include <VirtualWire.h>
+
+/*========================================
+Declaration of all variables used in this
+program.
+========================================*/
+
+byte message[VW_MAX_MESSAGE_LEN]; // a buffer to store the incoming messages
+byte messageLength = VW_MAX_MESSAGE_LEN; // the size of the message
+
+
+void setup()
+{
+  Serial.begin(9600);
+  Serial.println("Device is ready");
+  // Initialize the IO and ISR
+  vw_setup(2000); // Bits per sec
+  vw_rx_start(); // Start the receiver
+}
+
+void loop()
+{
+  if (vw_get_message(message, &messageLength)) // Non-blocking
+  {
+    Serial.print("Received: ");
+    for (int i = 0; i < messageLength; i++)
+    {
+      Serial.write(message[i]);
+    }
+    Serial.println();
+  }
+}
