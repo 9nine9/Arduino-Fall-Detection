@@ -1,9 +1,19 @@
-/*=======================================
+/*========================================
 Program that detects a fall ensuring that
 it's not a "false positive" (jumps, etc).
 ========================================*/
 
+/*========================================
+This library has all the functions used in
+the accelerometer MMA7361.
+========================================*/
+
 #include <AcceleroMMA7361.h>
+
+/*========================================
+Declaration of all the variables used in
+the program.
+========================================*/
 
 AcceleroMMA7361 accelero;
 float x, y, z;
@@ -33,21 +43,14 @@ void setup()
 
 void loop()
 {
-  x = float(accelero.getXAccel())/100;
-  y = float(accelero.getYAccel())/100;
-  z = float(accelero.getZAccel())/100;
+  get_accelerations();
   if (x<0.1 && y<0.1 && z<0.1)
   {
     start_time = millis();
     falling = true;
-  }
-  if (falling);
-  {
     while ((z<5 && y<5 && z<5) && falling)
     {
-      x = float(accelero.getXAccel())/100;
-      y = float(accelero.getYAccel())/100;
-      z = float(accelero.getZAccel())/100;
+      get_accelerations();
       falling_time = millis();
       if ((falling_time - start_time)>5000)
       {
@@ -55,6 +58,12 @@ void loop()
       }
     }
     if (falling) Serial.println("FALL!");
-    falling = false;
   }
+}
+
+void get_accelerations()
+{
+  x = float(accelero.getXAccel())/100;
+  y = float(accelero.getYAccel())/100;
+  z = float(accelero.getZAccel())/100;
 }
