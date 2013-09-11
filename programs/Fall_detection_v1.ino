@@ -28,7 +28,6 @@ unsigned long start_falling_time, falling_time, start_message_time;
 boolean falling, send_message, fall;
 volatile boolean cancel;
 
-
 void setup()
 {
   interrupt_pin_number = 2;
