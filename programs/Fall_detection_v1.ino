@@ -32,7 +32,6 @@ volatile boolean cancel;
 void setup()
 {
   interrupt_pin_number = 2;
-  attatchInterrupt(interrupt_pin_number, cancel_send, RISING);
 
   /*Declare accelerometer pinout*/
   xpin = A0;   						//x axis pin
@@ -86,11 +85,19 @@ void loop()
 
 void wait_ten_seconds()
 {
+  attatchInterrupt(interrupt_pin_number, cancel_send, RISING);
   start_message_time = millis();
   while ((millis() - start_message_time)<10000 && !cancel);
   if (!cancel)
   {
+    detachInterrupt(interrupt_pin_number);
     send("FALL");
+    fall = false;
+    falling = false;
+  }
+  else
+  {
+    cancel = false;
   }
 }
 
