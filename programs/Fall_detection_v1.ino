@@ -1,8 +1,8 @@
 /*=================================================================================
 Program that detects a fall ensuring that it's not a "false positive" (jumps, etc).
 IF a fall is detected, it waits for 10 seconds before sending a message to the 
-receiver, when the user can press a button to cancel this operation in case of a
-"not fatal fall".
+receiver. During this time, the user can press a button to cancel this operation 
+in case of a "not fatal fall".
 =================================================================================*/
 
 /*=================================================================================
