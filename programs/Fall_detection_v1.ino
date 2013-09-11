@@ -84,7 +84,7 @@ void loop()
 
 void wait_ten_seconds()
 {
-  attatchInterrupt(interrupt_pin_number, cancel_send, RISING);
+  attachInterrupt(interrupt_pin_number, cancel_send, RISING);
   start_message_time = millis();
   while ((millis() - start_message_time)<10000 && !cancel);
   if (!cancel)
