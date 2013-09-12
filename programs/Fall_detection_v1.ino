@@ -84,8 +84,8 @@ void loop()
 
 void wait_ten_seconds()
 {
-  attachInterrupt(interrupt_pin_number, cancel_send, RISING);
-  start_message_time = millis();
+  attachInterrupt(interrupt_pin_number, cancel_send, RISING);	//the interruption will only work during the time
+  start_message_time = millis();				//that the micro is "waiting" the cancel
   while ((millis() - start_message_time)<10000 && !cancel);
   if (!cancel)
   {
@@ -110,10 +110,10 @@ void get_accelerations()
 void send(char *message)
 {
   vw_send((uint8_t *)message, strlen(message));
-  vw_wait_tx();                                         // Wait until the whole message is send
+  vw_wait_tx();                                         //wait until the whole message is send
 }
 
-void cancel_send()
+void cancel_send()					//interruption to cancel the sending of the message
 {
   if (falling)
   {
