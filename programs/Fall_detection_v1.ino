@@ -25,7 +25,7 @@ AcceleroMMA7361 accelero;
 float x, y, z;
 int xpin, ypin, zpin, gs, sl, g0, st, interrupt_pin_number;
 unsigned long start_falling_time, falling_time, start_message_time;
-boolean falling, send_message, fall;
+boolean falling, send_message;
 volatile boolean cancel;
 
 void setup()
@@ -73,30 +73,22 @@ void loop()
     }
     if (falling) 
     {
-      fall = true;
+      wait_ten_seconds();
     }
-  }
-  if (fall)
-  {
-    wait_ten_seconds();
   }
 }
 
 void wait_ten_seconds()
 {
+  cancel = false;
   attachInterrupt(interrupt_pin_number, cancel_send, RISING);	//the interruption will only work during the time
   start_message_time = millis();				//that the micro is "waiting" the cancel
   while ((millis() - start_message_time)<10000 && !cancel);
+  detachInterrupt(interrupt_pin_number);
   if (!cancel)
   {
-    detachInterrupt(interrupt_pin_number);
     send("FALL");
-    fall = false;
     falling = false;
-  }
-  else
-  {
-    cancel = false;
   }
 }
 
@@ -115,8 +107,5 @@ void send(char *message)
 
 void cancel_send()					//interruption to cancel the sending of the message
 {
-  if (falling)
-  {
-    cancel = true;
-  }
+  cancel = true;
 }
