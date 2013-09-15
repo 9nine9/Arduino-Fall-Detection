@@ -66,7 +66,7 @@ void loop()
     {
       get_accelerations();
       falling_time = millis();
-      if ((falling_time - start_time)>5000)     	//if it has been falling for more than 5 seconds, its a "false positive"
+      if ((falling_time - start_falling_time)>5000)     	//if it has been falling for more than 5 seconds, its a "false positive"
       {
         falling = false;
       }
